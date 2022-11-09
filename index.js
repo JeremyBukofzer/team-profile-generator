@@ -1,8 +1,14 @@
-const Intern = require("./lib/intern.js");
+const Intern = require("./lib/Intern.js");
 const Engineer = require("./lib/engineer.js");
-const Manager = require("./lib/manager.js");
+const Manager = require("./lib/Manager.js/index.js");
 const inquirer = require("inquirer");
-const 
+const path = require("path");
+const fs = require("fs");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "myTeam.html");
+const generateTeam = require("./src/template.js")
+
+teamArray = [];
 
 //start of inquiries
 function startApp() {
@@ -114,4 +120,15 @@ function startApp() {
             renderTeam();
         });
     }
+
+    function generateHTML () {
+        console.log('Team successfully created!')
+
+        FileSystem.writeFileSync(outputPath, generateTeam(teamArray), "UTF-8")
+    }
+
+    renderTeam();
+
 }
+
+startApp();
