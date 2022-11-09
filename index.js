@@ -1,11 +1,11 @@
-const Intern = require("./lib/Intern.js");
-const Engineer = require("./lib/engineer.js");
-const Manager = require("./lib/Manager.js/index.js");
-const inquirer = require("inquirer");
-const path = require("path");
-const fs = require("fs");
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "myTeam.html");
+import Intern from "./lib/Intern.js";
+import Engineer from "./lib/Engineer.js";
+import Manager from "./lib/Manager.js";
+import inquirer from "inquirer"
+import path from "path";
+import fs from "fs";
+const DIST_DIR = path.resolve(__dirname, "dist");
+const outputPath = path.join(DIST_DIR, "myTeam.html");
 const generateTeam = require("./src/template.js")
 
 teamArray = [];
@@ -36,26 +36,26 @@ function startApp() {
     }
 
     function generateIntern() {
-        inquirer.prompt ([
+        inquirer.prompt([
             {
-                type:"input",
-                name:"internName",
-                message:"What is the name of the Intern?"
+                type: "input",
+                name: "internName",
+                message: "What is the name of the Intern?"
             },
             {
-                type:"input",
-                name:"internIdNumber",
-                message:"What is the Intern's ID number?"
+                type: "input",
+                name: "internIdNumber",
+                message: "What is the Intern's ID number?"
             },
             {
-                type:"input",
-                name:"internEmail",
-                message:"What is the Intern's email address?"
+                type: "input",
+                name: "internEmail",
+                message: "What is the Intern's email address?"
             },
             {
-                type:"input",
-                name:"internSchool",
-                message:"What is the name of the school the Intern attends?"
+                type: "input",
+                name: "internSchool",
+                message: "What is the name of the school the Intern attends?"
             },
         ]).then(answers => {
             const intern = new Intern(answers.internName, answers.internIdNumber, answers.internEmail, answers.internSchool);
@@ -65,26 +65,26 @@ function startApp() {
     }
 
     function generateEngineer() {
-        inquirer.prompt ([
+        inquirer.prompt([
             {
-                type:"input",
-                name:"engineerName",
-                message:"What is the name of the Engineer?"
+                type: "input",
+                name: "engineerName",
+                message: "What is the name of the Engineer?"
             },
             {
-                type:"input",
-                name:"engineerIdNumber",
-                message:"What is the Engineer's ID number?"
+                type: "input",
+                name: "engineerIdNumber",
+                message: "What is the Engineer's ID number?"
             },
             {
-                type:"input",
-                name:"engineerEmail",
-                message:"What is the Engineer's email address?"
+                type: "input",
+                name: "engineerEmail",
+                message: "What is the Engineer's email address?"
             },
             {
-                type:"input",
-                name:"engineerGitHub",
-                message:"What is the Engineer's GitHub ID?"
+                type: "input",
+                name: "engineerGitHub",
+                message: "What is the Engineer's GitHub ID?"
             },
         ]).then(answers => {
             const engineer = new Engineer(answers.engineerName, answers.engineerIdNumber, answers.engineerEmail, answers.engineerGitHub);
@@ -93,26 +93,26 @@ function startApp() {
         });
     }
     function generateManager() {
-        inquirer.prompt ([
+        inquirer.prompt([
             {
-                type:"input",
-                name:"mangerName",
-                message:"What is the name of the Manager?"
+                type: "input",
+                name: "mangerName",
+                message: "What is the name of the Manager?"
             },
             {
-                type:"input",
-                name:"managerIdNumber",
-                message:"What is the Manager's ID number?"
+                type: "input",
+                name: "managerIdNumber",
+                message: "What is the Manager's ID number?"
             },
             {
-                type:"input",
-                name:"managerEmail",
-                message:"What is the Manager's email address?"
+                type: "input",
+                name: "managerEmail",
+                message: "What is the Manager's email address?"
             },
             {
-                type:"input",
-                name:"managerOffice",
-                message:"What is the Manager's office number?"
+                type: "input",
+                name: "managerOffice",
+                message: "What is the Manager's office number?"
             },
         ]).then(answers => {
             const manager = new Manager(answers.managerName, answers.managerIdNumber, answers.managerEmail, answers.managerOffice);
@@ -121,10 +121,10 @@ function startApp() {
         });
     }
 
-    function generateHTML () {
+    function htmlBuilder() {
         console.log('Team successfully created!')
 
-        FileSystem.writeFileSync(outputPath, generateTeam(teamArray), "UTF-8")
+        fs.writeFileSync(outputPath, generateTeam(teamArray), "UTF-8")
     }
 
     renderTeam();
