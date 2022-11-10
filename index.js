@@ -61,7 +61,7 @@ function startApp() {
                 message: "What is the name of the school the Intern attends?"
             },
         ]).then(answers => {
-            const intern = new Intern(answers.internName, answers.internIdNumber, answers.internEmail, answers.internSchool);
+            const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
             teamArray.push(intern);
             renderTeam();
         });
@@ -99,12 +99,12 @@ function startApp() {
         inquirer.prompt([
             {
                 type: "input",
-                name: "mangerName",
+                name: "managerName",
                 message: "What is the name of the Manager?"
             },
             {
                 type: "input",
-                name: "managerIdNumber",
+                name: "managerId",
                 message: "What is the Manager's ID number?"
             },
             {
