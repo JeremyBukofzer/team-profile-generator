@@ -1,9 +1,9 @@
-import Intern from "./lib/Intern.js";
-import Engineer from "./lib/Engineer.js";
-import Manager from "./lib/Manager.js";
-import inquirer from "inquirer"
-import path from "path";
-import fs from "fs";
+const Intern = require("./lib/Intern.js");
+const Engineer = require("./lib/Engineer.js");
+const Manager = require("./lib/Manager.js");
+const inquirer = require("inquirer")
+const path = require("path");
+const fs = require("fs");
 const DIST_DIR = path.resolve(__dirname, "dist");
 const outputPath = path.join(DIST_DIR, "myTeam.html");
 const generateTeam = require("./src/template.js")
@@ -18,24 +18,27 @@ function startApp() {
             {
                 type: 'list',
                 name: 'position',
-                choices: ['Engineer', 'Intern', 'Manager']
+                choices: ['Engineer', 'Intern', 'Manager', 'N/A']
             }
-        ]).then(function (positionChoice) {
-            switch (positionChoice.employeeQueries) {
+        ]).then(function (userInput) {
+            switch (userInput.position) {
                 case "Engineer":
-                    generateEngineer();
+                    addEngineer();
                     break;
                 case "Intern":
-                    generateIntern();
+                    addIntern();
                     break;
                 case "Manager":
-                    generateManager();
+                    addManager();
                     break;
+
+                    default:
+                        htmlGenerator();
             }
         })
     }
 
-    function generateIntern() {
+    function addIntern() {
         inquirer.prompt([
             {
                 type: "input",
@@ -44,7 +47,7 @@ function startApp() {
             },
             {
                 type: "input",
-                name: "internIdNumber",
+                name: "internId",
                 message: "What is the Intern's ID number?"
             },
             {
@@ -64,7 +67,7 @@ function startApp() {
         });
     }
 
-    function generateEngineer() {
+    function addEngineer() {
         inquirer.prompt([
             {
                 type: "input",
@@ -73,7 +76,7 @@ function startApp() {
             },
             {
                 type: "input",
-                name: "engineerIdNumber",
+                name: "engineerId",
                 message: "What is the Engineer's ID number?"
             },
             {
@@ -83,16 +86,16 @@ function startApp() {
             },
             {
                 type: "input",
-                name: "engineerGitHub",
+                name: "engineerGithub",
                 message: "What is the Engineer's GitHub ID?"
             },
         ]).then(answers => {
-            const engineer = new Engineer(answers.engineerName, answers.engineerIdNumber, answers.engineerEmail, answers.engineerGitHub);
+            const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
             teamArray.push(engineer);
             renderTeam();
         });
     }
-    function generateManager() {
+    function addManager() {
         inquirer.prompt([
             {
                 type: "input",
@@ -111,18 +114,18 @@ function startApp() {
             },
             {
                 type: "input",
-                name: "managerOffice",
+                name: "managerOfficeNumber",
                 message: "What is the Manager's office number?"
             },
         ]).then(answers => {
-            const manager = new Manager(answers.managerName, answers.managerIdNumber, answers.managerEmail, answers.managerOffice);
+            const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
             teamArray.push(manager);
             renderTeam();
         });
     }
 
-    function htmlBuilder() {
-        console.log('Team successfully created!')
+    function htmlGenerator() {
+        console.log("Team successfully created!")
 
         fs.writeFileSync(outputPath, generateTeam(teamArray), "UTF-8")
     }
